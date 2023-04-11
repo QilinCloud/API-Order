@@ -1,0 +1,6148 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI Document on Azure Functions
+  description: |
+    This is the OpenAPI Document on Azure Functions
+
+    # Authentication
+
+    Qilin offers two forms of authentication:
+      - bearer
+      - api_key
+
+    bearer - an open protocol to allow secure authorization in a simple
+    and standard method from web, mobile and desktop applications.
+
+    <SecurityDefinitions />
+  version: 1.0.0
+  license:
+    name: Qilin
+    url: Qilin.com
+servers:
+  - url: https://apimgmt-qilin-dev.azure-api.net/test/api
+paths:
+  /orders/{orderId}/cancellations:
+    post:
+      tags:
+        - Cancellation
+      summary: Create a new Cancellation
+      operationId: CreateCancellation
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cancellation Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cancellationDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Cancellation
+      summary: Get cancellations by order Id
+      operationId: GetCancellationsByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items per page
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: List of Cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/cancellations/{cancellationId}:
+    get:
+      tags:
+        - Cancellation
+      summary: Get the detail of Cancellation by CancellationId
+      operationId: GetCancellationById
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: cancellationId
+          in: path
+          description: The **CancellationId** parameter from third party
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Cancellation
+      summary: Update Cancellation
+      operationId: UpdateCancellation
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: cancellationId
+          in: path
+          description: The **CancellationId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cancellation Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCancellationDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /internal/orders/{orderId}/cancellations/{cancellationId}:
+    get:
+      tags:
+        - Cancellation
+      summary: Get the detail of Cancellation by internal CancellationId
+      operationId: GetCancellationByInternalId
+      parameters:
+        - name: orderId
+          in: path
+          description: The internal **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: cancellationId
+          in: path
+          description: The internal **CancellationId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/cancellations/{cancellationId}/state:
+    put:
+      tags:
+        - Cancellation
+      summary: Update state of cancellation
+      operationId: UpdateCancellationState
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: cancellationId
+          in: path
+          description: The **CancellationId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cancellation State Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCancellationStateDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_cancellationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/invoices:
+    post:
+      tags:
+        - Invoice
+      summary: Create a new invoice
+      operationId: CreateInvoice
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Invoice Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/invoiceDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_invoiceDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Invoice
+      summary: Get list of Invoice by OrderId
+      operationId: GetInvoicesByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_invoiceDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/invoices/{invoiceId}:
+    get:
+      tags:
+        - Invoice
+      summary: Get the detail of Invoice by InvoiceId
+      operationId: GetInvoicesByInvoiceId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          description: The **InvoiceId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_invoiceDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    head:
+      tags:
+        - Invoice
+      summary: Get basic info of Invoice by InvoiceId
+      operationId: GetBasicInfoInvoiceByInvoiceId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          description: The **InvoiceId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: No description
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+  /internal/orders/{orderId}/invoices/{invoiceId}:
+    get:
+      tags:
+        - Invoice
+      summary: Get the detail of Invoice by Invoice Internal Id
+      operationId: GetInvoicesByInvoiceInternalId
+      parameters:
+        - name: orderId
+          in: path
+          description: The internal **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          description: The internal **InvoiceId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_invoiceDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders:
+    post:
+      tags:
+        - Order
+      summary: Create a new Order
+      operationId: CreateOrder
+      requestBody:
+        description: Order Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orderDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Order
+      summary: Get a list Order
+      operationId: GetOrders
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items per page
+          schema:
+            type: integer
+            format: int32
+        - name: creationDateFrom
+          in: query
+          description: Creation date from
+          schema:
+            type: string
+            format: date-time
+        - name: creationDateTo
+          in: query
+          description: Creation date to
+          schema:
+            type: string
+            format: date-time
+        - name: updatedDateFrom
+          in: query
+          description: Last updated date from
+          schema:
+            type: string
+            format: date-time
+        - name: updatedDateTo
+          in: query
+          description: Last updated date to
+          schema:
+            type: string
+            format: date-time
+        - name: productVariationId
+          in: query
+          description: Product variation Id for filter
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of order
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{id}:
+    delete:
+      tags:
+        - Order
+      summary: Delete an order by Id
+      operationId: DeleteOrder
+      parameters:
+        - name: id
+          in: path
+          description: The **Order Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    patch:
+      tags:
+        - Order
+      summary: Delta update an order by id
+      operationId: DeltaUpdateOrder
+      parameters:
+        - name: id
+          in: path
+          description: The **Order Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Delta Update Data Model
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/patchUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Order
+      summary: Get order by id
+      operationId: GetOrderById
+      parameters:
+        - name: id
+          in: path
+          description: The order identity
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: single order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Order
+      summary: Update an order by id
+      operationId: UpdateOrder
+      parameters:
+        - name: id
+          in: path
+          description: The **Order Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Order Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orderDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ordersupporttickets/{id}/messages:
+    post:
+      tags:
+        - Order support ticket
+      summary: Adding message into Order support ticket item
+      operationId: AddMessageIntoOrderSupportTicket
+      parameters:
+        - name: id
+          in: path
+          description: The **Order support ticket Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Order support ticket Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/messageDto'
+        required: true
+      responses:
+        '200':
+          description: Payload of SuccessResponse containing OrderSupportTicketDetailDto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderSupportTicketDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /ordersupporttickets:
+    post:
+      tags:
+        - Order support ticket
+      summary: Create a Order support ticket item
+      operationId: CreateOrderSupportTicket
+      requestBody:
+        description: Order support ticket Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orderSupportTicketDto'
+        required: true
+      responses:
+        '200':
+          description: Payload of SuccessResponse containing OrderSupportTicketDetailDto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderSupportTicketDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+    get:
+      tags:
+        - Order support ticket
+      summary: Get list of OrderSupportTickets
+      operationId: GetListOrderSupportTicket
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: orderBy
+          in: query
+          description: Order by field
+          required: true
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          required: true
+          schema:
+            type: string
+        - name: orderId
+          in: query
+          description: Order Id which belong to ticket
+          schema:
+            type: string
+        - name: orderLineItemIds
+          in: query
+          description: Order line item Ids(separated by ',') which belongs to Ticket
+          schema:
+            type: string
+        - name: ticketStates
+          in: query
+          description: Ticket states(separated by ',')
+          schema:
+            type: string
+        - name: subject
+          in: query
+          description: Ticket subject
+          schema:
+            type: boolean
+        - name: creationDateFrom
+          in: query
+          description: The beginning filter by Creation date of ticket
+          schema:
+            type: boolean
+        - name: creationDateTo
+          in: query
+          description: The ending filter by Creation date of ticket
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: The order support ticket list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderSupportTicketDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ordersupporttickets/{id}:
+    get:
+      tags:
+        - Order support ticket
+      summary: Get a Order support ticket item by ticket id
+      operationId: GetOrderSupportTicketById
+      parameters:
+        - name: id
+          in: path
+          description: The **UUID** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The Warehouse detail by Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderSupportTicketDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /orders/{orderId}/paymentInfo/payments:
+    post:
+      tags:
+        - PaymentInfo
+      summary: Create a new payment
+      operationId: CreatePayment
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Payment Info Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paymentDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_paymentInfoDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/paymentInfo:
+    post:
+      tags:
+        - PaymentInfo
+      summary: Create a new payment info
+      operationId: CreatePaymentInfo
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Payment Info Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paymentInfoDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_paymentInfoDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - PaymentInfo
+      summary: Get Payment Info by orderId
+      operationId: GetPaymentInfo
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'The Order payment information detail '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_paymentInfoDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/purchaseOrderLineItem/{id}:
+    get:
+      tags:
+        - PurchaseOrderLineItem
+      summary: Get Purchase Order Line Item by Id
+      operationId: GetPOLineItemByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **Id** of PurchaseOrderLineItem
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_purchaseOrderLineItemDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/purchaseOrderLineItem:
+    get:
+      tags:
+        - PurchaseOrderLineItem
+      summary: Get list of Purchase Order Line Item by OrderId
+      operationId: GetPOLineItemByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_purchaseOrderLineItemDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/refunds:
+    post:
+      tags:
+        - Refund
+      summary: Create a new Refund
+      operationId: CreateRefund
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Refund Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/refundDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_refundDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Refund
+      summary: Get list of Refund by OrderId
+      operationId: GetRefundByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_refundDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/refunds/{refundId}:
+    get:
+      tags:
+        - Refund
+      summary: Get detail of Refund by RefundId
+      operationId: GetRefundByRefundId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: refundId
+          in: path
+          description: The **RefundId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_refundDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    head:
+      tags:
+        - Refund
+      summary: Get basic info of Refund by RefundId
+      operationId: GetBasicInfoRefundByRefundId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: refundId
+          in: path
+          description: The **RefundId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: No description
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    put:
+      tags:
+        - Refund
+      summary: Update Refund
+      operationId: UpdateRefund
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: refundId
+          in: path
+          description: The **RefundId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Refund Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateRefundDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_refundDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/refunds/{refundId}/state:
+    put:
+      tags:
+        - Refund
+      summary: Update state of refund
+      operationId: UpdateRefundState
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: refundId
+          in: path
+          description: The **RefundId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Refund State Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateRefundStateDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/successResponse_refundDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/returns:
+    post:
+      tags:
+        - Return
+      summary: Create a new Return
+      operationId: CreateReturn
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Return Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/returnDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_returnDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Return
+      summary: Get a list Return
+      operationId: GetReturns
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items per page
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: List of return
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/successResponse_returnDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/returns/{id}:
+    head:
+      tags:
+        - Return
+      summary: Get basic info of Return
+      operationId: GetBasicReturnById
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **ReturnId** parameter from third party
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: No description
+        '400':
+          description: No description
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Return
+      summary: Get Return by returnId
+      operationId: GetReturnById
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **ReturnId** parameter from third party
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_returnDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Return
+      summary: Update Return
+      operationId: UpdateReturn
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **ReturnId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Return Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/returnDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_returnDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/returns/{returnId}/state:
+    put:
+      tags:
+        - Return
+      summary: Update Return Status
+      operationId: UpdateReturnStatus
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter from third party
+          required: true
+          schema:
+            type: string
+        - name: returnId
+          in: path
+          description: The **ReturnId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Return Status Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateReturnStatusDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_returnDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/shipments/{shipmentId}/deliveryNotes:
+    post:
+      tags:
+        - Shipment
+      summary: Create a new Delivery Note
+      operationId: CreateDeliveryNote
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: shipmentId
+          in: path
+          description: The **ShipmentId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: DeleveryNote Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deliveryNoteDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_deliveryNoteDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/shipments/{shipmentId}/deliveryNotes/{deliveryNoteId}/packages:
+    post:
+      tags:
+        - Shipment
+      summary: Create a new package
+      operationId: CreatePackage
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: shipmentId
+          in: path
+          description: The **ShipmentId** parameter
+          required: true
+          schema:
+            type: string
+        - name: deliveryNoteId
+          in: path
+          description: The **DeliveryNoteId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Package Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/packageDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_packageDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/shipments:
+    post:
+      tags:
+        - Shipment
+      summary: Create a new shipment
+      operationId: CreateShipment
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Shipment Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/shipmentDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shipmentDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Shipment
+      summary: Get list of Shipment by orderId
+      operationId: GetListShipmentByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The list of shipment belong to this orderId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shipmentDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/shipments/{shipmentId}/deliveryNotes/{deliveryNoteId}/packages/{packageId}:
+    patch:
+      tags:
+        - Shipment
+      summary: Delta update a package by id
+      operationId: DeltaUpdatePackage
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: shipmentId
+          in: path
+          description: The **ShipmentId** parameter
+          required: true
+          schema:
+            type: string
+        - name: deliveryNoteId
+          in: path
+          description: The **DeliveryNoteId** parameter
+          required: true
+          schema:
+            type: string
+        - name: packageId
+          in: path
+          description: The **PackageId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Delta Update Data Model
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/patchUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_packageDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Shipment
+      summary: Update a package
+      operationId: UpdatePackage
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: shipmentId
+          in: path
+          description: The **ShipmentId** parameter
+          required: true
+          schema:
+            type: string
+        - name: deliveryNoteId
+          in: path
+          description: The **DeliveryNoteId** parameter
+          required: true
+          schema:
+            type: string
+        - name: packageId
+          in: path
+          description: The **PackageId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Package Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/packageDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_packageDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/shipments/{id}:
+    get:
+      tags:
+        - Shipment
+      summary: Get detail of Shipment by shipmentId
+      operationId: GetShipmentById
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **shipmentId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The list of shipment belong to this orderId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shipmentDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ordersupporttickets/{id}/status:
+    put:
+      tags:
+        - Order support ticket
+      summary: Update status of order support ticket item
+      operationId: UpdateOrderSupportTicketStatus
+      parameters:
+        - name: id
+          in: path
+          description: The **Order support ticket Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 'Ticket life cycle '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ticketLifeCycleDto'
+        required: true
+      responses:
+        '200':
+          description: Payload of SuccessResponse containing OrderSupportTicketDetailDto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_orderSupportTicketDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /orders/{orderId}/feedbacks:
+    post:
+      tags:
+        - Feedback
+      summary: Create a new feedback
+      operationId: CreateFeedback
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Feedback Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_feedbackDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Feedback
+      summary: Get a list of feedback by orderId
+      operationId: GetFeedbackByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The list of feedback belong to this orderId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_feedbackDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/feedbacks/{id}:
+    delete:
+      tags:
+        - Feedback
+      summary: Delete a feedback
+      operationId: DeleteFeedback
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **feedbackId** parameter from third party
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delete successfully message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Feedback
+      summary: Get detail of feedback by id
+      operationId: GetFeedbackById
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **feedbackId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Feedback Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_feedbackDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Feedback
+      summary: Update a feedback
+      operationId: UpdateFeedback
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **feedbackId** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Feedback Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_feedbackDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /orders/{orderId}/feedbacks/{id}/reply:
+    post:
+      tags:
+        - Feedback
+      summary: Reply a feedback
+      operationId: ReplyFeedback
+      parameters:
+        - name: orderId
+          in: path
+          description: The **OrderId** parameter
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The **feedbackId** parameter from third party
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Feedback Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackDto'
+        required: true
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_feedbackDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      description: |
+        Use this [link](https://qilindev.b2clogin.com/qilindev.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SIGNIN_TEST&client_id=ef526441-11da-42c3-9219-93b8a8d4c953&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fjwt.ms&scope=openid&response_type=id_token&prompt=login) to login and get the JWT
+      scheme: bearer
+    api_key:
+      type: apiKey
+      in: header
+      name: x-api-key
+  schemas:
+    noteDetailDto:
+      type: object
+      properties:
+        noteTypeText:
+          type: string
+          description: The type of the note.
+          nullable: true
+        createdDate:
+          type: string
+          description: The date when this annotation was created.
+          format: date-time
+          nullable: true
+        content:
+          type: object
+          additionalProperties:
+            type: string
+          description: The content of the note.
+        noteType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The type of the note.
+          format: int32
+          nullable: true
+    money:
+      required:
+        - amountInFractionalUnit
+        - currency
+      type: object
+      properties:
+        amountInFractionalUnit:
+          type: integer
+          description: A value in the smallest unit of the currency. So for the currency euro then the value in cents, for the currency Swiss franc, then the value in centimes, etc.. Always net.
+          format: int32
+        currency:
+          minLength: 1
+          type: string
+          description: The currency in ISO 4217 (Iso3) format.
+      description: The sum (gross)
+    purchaseOrderLineItemDetailDto:
+      required:
+        - purchaseOrderLineItemId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Purchase Order Line Item.
+        orderId:
+          type: string
+          description: Reference to the ID of the Order.
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this invoice or credit memo item.
+          nullable: true
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        purchaseOrderLineItemId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of purchase order line item in the channel
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        taric:
+          type: string
+          description: Customs tariff number
+          nullable: true
+        countryOfOrigin:
+          type: string
+          description: Country of origin, in ISO 3166 ALPHA-3 format
+          nullable: true
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: "Only required for returns: The condition of the return, see API ERP Offers.Condition<br/>\n                                                    Value:<br/>\n                                                    0: New<br/>\n\t\t\t\t\t\t\t\t\t\t\t        1: AsNew<br/>\n\t\t\t\t\t\t\t\t\t\t\t        2: VeryGood<br/>\n\t\t\t\t\t\t\t\t\t\t\t        3: Good<br/>\n\t\t\t\t\t\t\t\t\t\t\t        4: Acceptable<br/>\n\t\t\t\t\t\t\t\t\t\t\t        5: Antique<br/>\n\t\t\t\t\t\t\t\t\t\t\t        6: Broken<br/>\n\t\t\t\t\t\t\t\t\t\t\t        7: Refurbished<br/>\n\t\t\t\t\t\t\t\t\t\t\t        8: BStock<br/>\n\t\t\t\t\t\t\t\t\t\t\t        9: DamagedPackaging<br/>\n\t\t\t\t\t\t\t\t\t\t\t        10: Demo<br/>\n\t\t\t\t\t\t\t\t\t\t\t        11: AccordingToDescription<br/>\n\t\t\t\t\t\t\t\t\t\t\t        12: Incomplete<br/>\n\t\t\t\t\t\t\t\t\t\t\t        13: Unknown"
+          format: int32
+          nullable: true
+        reason:
+          type: object
+          additionalProperties:
+            type: string
+          description: The reason for cancellation, return, credit, etc..
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this reference position
+    cancellationDetailDto:
+      required:
+        - cancellationId
+        - state
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Cancellation.
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this cancellation.
+          nullable: true
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+          description: A list of order items that have been cancelled.
+          nullable: true
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        stateName:
+          type: string
+          description: The state name of the cancellation
+        cancellationId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of cancellation in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: |-
+            The status of the cancellation<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: Finished
+          format: int32
+        requestReason:
+          type: string
+          description: The reason for the cancellation request
+          nullable: true
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the cancellation request '
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this cancellation
+    pagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+        pageIndex:
+          type: integer
+          format: int32
+        totalItem:
+          type: integer
+          format: int32
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+        next:
+          type: string
+        last:
+          type: string
+    successResponse_cancellationDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/cancellationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    list_object:
+      type: array
+      items:
+        type: object
+    qilinError:
+      type: object
+      properties:
+        errorCode:
+          enum:
+            - 5010
+            - 5020
+            - 5030
+            - 5040
+            - 6010
+            - 7000
+            - 7010
+            - 7020
+            - 7030
+            - 7040
+            - 7050
+            - 7060
+            - 7070
+            - 7080
+            - 7090
+            - 7100
+            - 7110
+            - 7120
+            - 7130
+            - 7140
+            - 7150
+            - 7160
+            - 7170
+            - 7180
+            - 7190
+            - 7200
+            - 7210
+            - 7220
+            - 7230
+            - 8000
+            - 8001
+            - 8002
+            - 8010
+            - 8011
+            - 8012
+            - 8013
+            - 8014
+            - 8015
+            - 8016
+            - 8017
+            - 8018
+            - 8030
+            - 8031
+            - 8032
+            - 8033
+            - 8034
+            - 8035
+            - 8036
+            - 8037
+            - 8060
+            - 8061
+            - 8062
+            - 9000
+            - 9001
+            - 9002
+            - 9003
+            - 9004
+            - 9005
+            - 9006
+            - 9007
+            - 9008
+            - 9009
+            - 9010
+            - 9011
+            - 9012
+            - 9013
+            - 9020
+            - 9030
+            - 9040
+            - 9041
+            - 9050
+            - 9060
+            - 9070
+            - 9071
+            - 9072
+            - 9073
+            - 9075
+            - 9076
+            - 9077
+            - 9078
+            - 9079
+            - 9080
+            - 9081
+            - 9082
+            - 9083
+            - 9084
+            - 9085
+            - 9086
+            - 9087
+            - 9088
+            - 9089
+            - 9090
+            - 9091
+            - 9092
+            - 9101
+            - 9102
+            - 9103
+            - 9104
+            - 9105
+            - 9106
+            - 9107
+            - 9108
+            - 9109
+            - 9110
+            - 9111
+            - 9112
+            - 9113
+            - 9114
+            - 9115
+            - 9116
+            - 9201
+            - 9202
+            - 9203
+            - 9204
+            - 9301
+            - 9302
+            - 9303
+            - 9304
+            - 9305
+            - 9306
+            - 9307
+            - 9308
+            - 9309
+            - 9310
+            - 9311
+            - 9312
+            - 9313
+            - 9314
+            - 9315
+            - 9316
+            - 9317
+            - 9318
+            - 9319
+            - 10000
+            - 10001
+            - 10003
+            - 10004
+            - 10005
+            - 10006
+            - 10007
+            - 10008
+            - 10009
+            - 10011
+            - 10012
+            - 10013
+            - 10014
+            - 10015
+            - 10020
+            - 10021
+            - 10023
+            - 10024
+            - 10025
+            - 10026
+            - 10027
+            - 10028
+            - 10029
+            - 10030
+            - 10031
+            - 10032
+            - 10033
+            - 10034
+            - 10035
+            - 10036
+            - 10037
+            - 10038
+            - 10039
+            - 10043
+            - 10044
+            - 10045
+            - 10046
+            - 10047
+            - 10048
+            - 10049
+            - 10050
+            - 10051
+            - 10052
+            - 10053
+            - 10054
+            - 10055
+            - 10056
+            - 10057
+            - 10058
+            - 10059
+            - 10070
+            - 10071
+            - 10072
+            - 10073
+            - 10074
+            - 10075
+            - 10076
+            - 10077
+            - 10078
+            - 10079
+            - 30000
+            - 30001
+            - 30002
+            - 30003
+            - 30004
+            - 30005
+            - 30020
+            - 30040
+            - 30060
+            - 30100
+            - 30120
+            - 30121
+            - 30122
+            - 50000
+            - 50001
+            - 50002
+            - 70000
+            - 70001
+            - 70002
+            - 70003
+            - 70004
+            - 70010
+            - 70011
+            - 70012
+            - 70013
+            - 70014
+            - 70015
+            - 70016
+            - 70017
+            - 70018
+            - 70019
+            - 70020
+            - 70021
+            - 70022
+            - 70023
+            - 70024
+            - 70025
+            - 70026
+            - 70027
+            - 70028
+            - 70029
+            - 70030
+            - 70031
+            - 70032
+            - 70033
+            - 70034
+            - 70035
+            - 70036
+            - 70037
+            - 70038
+            - 70039
+            - 70040
+            - 70041
+            - 70042
+            - 70043
+            - 70044
+            - 70045
+            - 70050
+            - 70051
+            - 70052
+            - 70100
+            - 70101
+            - 70102
+            - 70103
+            - 70104
+            - 70105
+            - 70106
+            - 70120
+            - 90000
+            - 90001
+            - 100040
+            - 100041
+            - 100042
+          type: integer
+          format: int32
+          default: 5010
+        shortDescription:
+          type: string
+        description:
+          type: string
+        moreInformationUrl:
+          type: string
+          format: uri
+        referenceTo:
+          type: string
+        errorType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          format: int32
+          default: 0
+        additionalInformation:
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+    badRequestExceptionModel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/qilinError'
+        creationTime:
+          type: string
+          format: date-time
+        correlationId:
+          type: string
+        requestAPI:
+          type: string
+        requestHttpVerb:
+          type: string
+        requestParameters:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+        requestBody:
+          type: string
+    noteDto:
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties:
+            type: string
+          description: The content of the note.
+        noteType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The type of the note.
+          format: int32
+          nullable: true
+    purchaseOrderLineItemDto:
+      required:
+        - purchaseOrderLineItemId
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this invoice or credit memo item.
+          nullable: true
+        purchaseOrderLineItemId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of purchase order line item in the channel
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        taric:
+          type: string
+          description: Customs tariff number
+          nullable: true
+        countryOfOrigin:
+          type: string
+          description: Country of origin, in ISO 3166 ALPHA-3 format
+          nullable: true
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: "Only required for returns: The condition of the return, see API ERP Offers.Condition<br/>\n                                                    Value:<br/>\n                                                    0: New<br/>\n\t\t\t\t\t\t\t\t\t\t\t        1: AsNew<br/>\n\t\t\t\t\t\t\t\t\t\t\t        2: VeryGood<br/>\n\t\t\t\t\t\t\t\t\t\t\t        3: Good<br/>\n\t\t\t\t\t\t\t\t\t\t\t        4: Acceptable<br/>\n\t\t\t\t\t\t\t\t\t\t\t        5: Antique<br/>\n\t\t\t\t\t\t\t\t\t\t\t        6: Broken<br/>\n\t\t\t\t\t\t\t\t\t\t\t        7: Refurbished<br/>\n\t\t\t\t\t\t\t\t\t\t\t        8: BStock<br/>\n\t\t\t\t\t\t\t\t\t\t\t        9: DamagedPackaging<br/>\n\t\t\t\t\t\t\t\t\t\t\t        10: Demo<br/>\n\t\t\t\t\t\t\t\t\t\t\t        11: AccordingToDescription<br/>\n\t\t\t\t\t\t\t\t\t\t\t        12: Incomplete<br/>\n\t\t\t\t\t\t\t\t\t\t\t        13: Unknown"
+          format: int32
+          nullable: true
+        reason:
+          type: object
+          additionalProperties:
+            type: string
+          description: The reason for cancellation, return, credit, etc..
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this reference position
+    cancellationDto:
+      required:
+        - purchaseOrderLineItems
+        - cancellationId
+        - state
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this cancellation.
+          nullable: true
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDto'
+          description: A list of order items that have been cancelled.
+          nullable: true
+        cancellationId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of cancellation in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: |-
+            The status of the cancellation<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: Finished
+          format: int32
+        requestReason:
+          type: string
+          description: The reason for the cancellation request
+          nullable: true
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the cancellation request '
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this cancellation
+    successResponse_cancellationDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/cancellationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    updateCancellationDto:
+      required:
+        - state
+      type: object
+      properties:
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: |-
+            The status of the cancellation<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: Finished
+          format: int32
+        requestReason:
+          type: string
+          description: The reason for the cancellation request
+          nullable: true
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the cancellation request '
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this cancellation
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this cancellation.
+          nullable: true
+    updateCancellationStateDto:
+      required:
+        - newState
+      type: object
+      properties:
+        newState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: |-
+            State value of the cancellation<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: Finished
+          format: int32
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the cancellation request '
+          nullable: true
+    paymentMethodDetailDto:
+      required:
+        - name
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: A note about the payment method.
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the payment method
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of the payment method.
+        termOfPayment:
+          type: integer
+          description: The payment term in days
+          format: int32
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this payment method (e.g. PayPal mail, bank details, credit card details (ATTENTION !!)).
+      description: The payment method of this payment.
+    paymentDetailDto:
+      required:
+        - amount
+      type: object
+      properties:
+        paymentMethod:
+          $ref: '#/components/schemas/paymentMethodDetailDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: A note on payment.
+          nullable: true
+        amount:
+          $ref: '#/components/schemas/money'
+        channelId:
+          type: string
+          description: Reference to the ID of the payment in the channel.
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the payment in the ERP.
+          nullable: true
+        transactionId:
+          type: string
+          description: The transaction ID for this payment.
+          nullable: true
+    addressDetailDto:
+      type: object
+      properties:
+        addressTypeName:
+          type: string
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes about this address.
+          nullable: true
+        street:
+          type: string
+        houseNumber:
+          type: string
+        building:
+          type: string
+        level:
+          type: string
+        room:
+          type: string
+        additionalAddressInformation:
+          type: string
+          description: Further address additional information
+          nullable: true
+        entryCode:
+          type: string
+        zip:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: Country in ISO 3166 ALPHA 3 format
+          nullable: true
+        addressType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+          type: integer
+          description: |-
+            Value<br/>
+                                0 : MerchantAddress<br/>
+                                1 : InvoiceAddress<br/>
+                                2 : DeliveryAddress<br/>
+                                3 : PickupAddress<br/>
+                                4 : FulfillerAddress<br/>
+                                5 : ProductAddress<br/>
+                                6 : BrandAddress<br/>
+                                7 : ManufacturerAddress<br/>
+                                8 : WarehouseAddress<br/>
+                                9 : CustomerAddress<br/>
+                                10 : RetourAddress<br/>
+                                11 : VendorAddress<br/>
+                                12 : Other<br/>
+          format: int32
+        chanelId:
+          type: string
+          description: Reference to the ID of the customer used by the marketplace itself for API actions
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the ERP system that the retailer uses.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this address
+    phoneDto:
+      type: object
+      properties:
+        phoneCountryCode:
+          type: string
+        value:
+          type: string
+    invoiceAddressDetailDto:
+      required:
+        - emails
+        - phones
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDetailDto'
+          description: A list of addresses
+        firstName:
+          type: string
+          description: The first name of customer. Required if CompanyName is empty.
+          nullable: true
+        lastName:
+          type: string
+          description: The last name of customer
+          nullable: true
+        companyName:
+          type: string
+          description: The name of company. Required if FirstName is empty.
+          nullable: true
+        emails:
+          type: array
+          items:
+            type: string
+          description: A list of emails
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+          description: A list of phones
+      description: The invoice sender
+    invoiceDetailDto:
+      required:
+        - invoiceId
+        - invoiceCreatedDate
+        - invoiceNumber
+        - invoiceType
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentDetailDto'
+          description: The list of payment
+          nullable: true
+        invoiceCreator:
+          $ref: '#/components/schemas/invoiceAddressDetailDto'
+        invoiceReceiver:
+          $ref: '#/components/schemas/invoiceAddressDetailDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes to this bill.
+          nullable: true
+        invoiceId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of invoice in the channel
+        invoiceCreatedDate:
+          minLength: 1
+          type: string
+          description: The invoice date
+          format: date-time
+        invoiceNumber:
+          minLength: 1
+          type: string
+          description: The invoice number
+        invoiceType:
+          enum:
+            - 0
+            - 1
+          type: integer
+          description: The invoice type
+          format: int32
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: The Urls to this invoice
+          nullable: true
+        termOfPayment:
+          type: integer
+          description: The payment term in days
+          format: int32
+          nullable: true
+        isPaid:
+          type: boolean
+          description: Has the bill been paid yet?
+          nullable: true
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        purchaseOrderLineItemIds:
+          type: array
+          items:
+            type: string
+          description: The Urls to this invoice
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this bill
+    successResponse_invoiceDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/invoiceDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    paymentMethodDto:
+      required:
+        - name
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: A note about the payment method.
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the payment method
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of the payment method.
+        termOfPayment:
+          type: integer
+          description: The payment term in days
+          format: int32
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this payment method (e.g. PayPal mail, bank details, credit card details (ATTENTION !!)).
+      description: The payment method of this payment.
+    paymentDto:
+      required:
+        - paymentMethod
+        - amount
+      type: object
+      properties:
+        paymentMethod:
+          $ref: '#/components/schemas/paymentMethodDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: A note on payment.
+          nullable: true
+        amount:
+          $ref: '#/components/schemas/money'
+        channelId:
+          type: string
+          description: Reference to the ID of the payment in the channel.
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the payment in the ERP.
+          nullable: true
+        transactionId:
+          type: string
+          description: The transaction ID for this payment.
+          nullable: true
+    addressDto:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes about this address.
+          nullable: true
+        street:
+          type: string
+        houseNumber:
+          type: string
+        building:
+          type: string
+        level:
+          type: string
+        room:
+          type: string
+        additionalAddressInformation:
+          type: string
+          description: Further address additional information
+          nullable: true
+        entryCode:
+          type: string
+        zip:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: Country in ISO 3166 ALPHA 3 format
+          nullable: true
+        addressType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+          type: integer
+          description: |-
+            Value<br/>
+                                0 : MerchantAddress<br/>
+                                1 : InvoiceAddress<br/>
+                                2 : DeliveryAddress<br/>
+                                3 : PickupAddress<br/>
+                                4 : FulfillerAddress<br/>
+                                5 : ProductAddress<br/>
+                                6 : BrandAddress<br/>
+                                7 : ManufacturerAddress<br/>
+                                8 : WarehouseAddress<br/>
+                                9 : CustomerAddress<br/>
+                                10 : RetourAddress<br/>
+                                11 : VendorAddress<br/>
+                                12 : Other<br/>
+          format: int32
+        chanelId:
+          type: string
+          description: Reference to the ID of the customer used by the marketplace itself for API actions
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the ERP system that the retailer uses.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this address
+    invoiceAddressDto:
+      required:
+        - addresses
+        - emails
+        - phones
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDto'
+          description: A list of addresses
+        firstName:
+          type: string
+          description: The first name of customer. Required if CompanyName is empty.
+          nullable: true
+        lastName:
+          type: string
+          description: The last name of customer
+          nullable: true
+        companyName:
+          type: string
+          description: The name of company. Required if FirstName is empty.
+          nullable: true
+        emails:
+          type: array
+          items:
+            type: string
+          description: A list of emails
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+          description: A list of phones
+      description: The invoice sender
+    invoiceDto:
+      required:
+        - invoiceId
+        - invoiceCreatedDate
+        - invoiceNumber
+        - invoiceType
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentDto'
+          description: The list of payment
+          nullable: true
+        invoiceCreator:
+          $ref: '#/components/schemas/invoiceAddressDto'
+        invoiceReceiver:
+          $ref: '#/components/schemas/invoiceAddressDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes to this bill
+          nullable: true
+        invoiceId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of invoice in the channel
+        invoiceCreatedDate:
+          minLength: 1
+          type: string
+          description: The invoice date
+          format: date-time
+        invoiceNumber:
+          minLength: 1
+          type: string
+          description: The invoice number
+        invoiceType:
+          enum:
+            - 0
+            - 1
+          type: integer
+          description: The invoice type
+          format: int32
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: The Urls to this invoice
+          nullable: true
+        termOfPayment:
+          type: integer
+          description: The payment term in days
+          format: int32
+          nullable: true
+        isPaid:
+          type: boolean
+          description: Has the bill been paid yet?
+          nullable: true
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        purchaseOrderLineItemIds:
+          type: array
+          items:
+            type: string
+          description: The Urls to this invoice
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this bill
+    successResponse_invoiceDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/invoiceDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    orderLineItemDetailDto:
+      required:
+        - orderLineItemId
+        - channelId
+        - state
+        - taxGroupType
+        - priceGross
+        - priceNet
+        - amount
+        - condition
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this Order Line Item
+        positionStateName:
+          type: string
+          description: The name of PositionState
+        taxGroupName:
+          type: string
+          description: The name of TaxGroupType
+        orderLineItemId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this position.
+        channelId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the channel through which this order was generated.
+        state:
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+            - 30
+            - 31
+            - 32
+            - 33
+            - 34
+            - 35
+            - 36
+            - 37
+            - 38
+            - 39
+          type: integer
+          description: The status of the position
+          format: int32
+        taxGroupType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: The control group of the order position
+          format: int32
+        priceGross:
+          $ref: '#/components/schemas/money'
+        priceNet:
+          $ref: '#/components/schemas/money'
+        amount:
+          type: integer
+          description: The amount
+          format: int32
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The condition of the order item
+          format: int32
+        variation:
+          type: object
+          additionalProperties:
+            type: object
+          description: If this item is a variant, the explanation of which variant is the order item is in this dictionary.
+        priority:
+          type: integer
+          description: The priority of this order item. 0 = no priority, 100 = highest priority.
+          format: int32
+          nullable: true
+        erpId:
+          type: string
+          description: An identifier that the ERP system uses to identify actions for this position.
+          nullable: true
+        personalization:
+          type: object
+          additionalProperties:
+            type: string
+          description: Personalization of the order item (e.g. a text to be printed on the product)
+        handlingTime:
+          type: integer
+          description: The time the merchant has to process this item, i.e. the time between the release of the order item by the marketplace and the transfer of the item to the carrier.
+          format: int32
+          nullable: true
+        productOrVariationId:
+          type: string
+          description: reference to the UUID of a product
+          nullable: true
+        gtiNs:
+          type: array
+          items:
+            type: string
+          description: A list of GTINs for this order item
+          nullable: true
+        skUs:
+          type: array
+          items:
+            type: string
+          description: A list of SKUs for this order item
+          nullable: true
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: A list of titles for this order item
+        mpn:
+          type: string
+          description: Manufacturer Product Number
+          nullable: true
+        brandId:
+          type: string
+          description: reference to the UUID of a brand
+          nullable: true
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: A list of reference ids to the categories in which this order item is offered.
+          nullable: true
+    voucherDetailDto:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: A note about the voucher.
+        voucherCode:
+          type: string
+          description: Coupon code.
+        channelId:
+          type: string
+          description: Reference to the ID of the voucher in the channel.
+        erpId:
+          type: string
+          description: Reference to the ID of the credit note in the ERP.
+        discount:
+          $ref: '#/components/schemas/money'
+        source:
+          type: array
+          items:
+            type: string
+          description: Where does this voucher come from (e.g. promotion from the merchant, promotion from the marketplace, individual voucher from the buyer, ...).
+    fee:
+      type: object
+      properties:
+        feeType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          format: int32
+          default: 0
+        value:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/money'
+    paymentInfoDetailDto:
+      required:
+        - paymentInfoId
+        - additionalCost
+        - orderValue
+        - fees
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new payment info.
+        orderId:
+          type: string
+          description: Reference to the ID of the Order.
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentDetailDto'
+          description: List of Payment Detail
+        paymentMethod:
+          $ref: '#/components/schemas/paymentMethodDetailDto'
+        vouchers:
+          type: array
+          items:
+            $ref: '#/components/schemas/voucherDetailDto'
+          description: A list of coupons for this order
+          nullable: true
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        paymentInfoId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the payment info in the channel.
+        additionalCost:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/money'
+          description: A list of additional costs (costs for the buyer). The Key indicates the name of the additional cost, the Value contains information about the amount of the additional cost and currency.
+        orderValue:
+          $ref: '#/components/schemas/money'
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/fee'
+          description: A list of fees for the trader for this order
+      description: Payment information.
+    contactDetailDto:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDetailDto'
+        firstName:
+          type: string
+        lastName:
+          type: string
+        customerNumber:
+          type: string
+        additionalFirstname:
+          type: string
+        additionalLastname:
+          type: string
+        title:
+          type: object
+          additionalProperties:
+            type: string
+        company:
+          type: string
+        salute:
+          type: string
+        sex:
+          enum:
+            - 0
+            - 1
+            - 2
+          type: integer
+          format: int32
+          default: 0
+          nullable: true
+        attention:
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+        emails:
+          type: array
+          items:
+            type: string
+        fax:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+        vatNumber:
+          type: string
+        taxNumber:
+          type: string
+      description: Contact information
+    linkDetailDto:
+      required:
+        - url
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes about this link.
+          nullable: true
+        url:
+          minLength: 1
+          type: string
+          description: The URL of the link
+          nullable: true
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name to this link
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this link
+    orderDetailDto:
+      required:
+        - channelId
+        - orderId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new order.
+        orderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderLineItemDetailDto'
+          description: A list of order items for this order
+        paymentInfoId:
+          type: string
+          description: PaymentInfo reference id.
+          nullable: true
+        paymentInfo:
+          $ref: '#/components/schemas/paymentInfoDetailDto'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDetailDto'
+          description: A list with address to this order
+          nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this Order.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDetailDto'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/linkDetailDto'
+          description: A list of links to this order
+          nullable: true
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        invoiceIds:
+          type: array
+          items:
+            type: string
+          description: A list of invoiceId
+          nullable: true
+        refundIds:
+          type: array
+          items:
+            type: string
+          description: A list of refundId
+          nullable: true
+        returnIds:
+          type: array
+          items:
+            type: string
+          description: A list of returnId
+          nullable: true
+        cancellationIds:
+          type: array
+          items:
+            type: string
+          description: A list of cancellationId
+          nullable: true
+        channelId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the channel through which this order was generated.
+          format: uuid
+        orderId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this order.
+        erpId:
+          type: string
+          description: An identifier that the ERP system uses to identify actions for this order.
+          nullable: true
+        orderNumberMarketplace:
+          type: string
+          description: The order number under which the end customer finds this order in the backend of the marketplace.
+          nullable: true
+        orderNumberErp:
+          type: string
+          description: The order number under which the dealer finds this order in his ERP.
+          nullable: true
+        additionalInformation:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+          description: A list full of objects that we can use to transfer additional information that was not thought of before or for which it is not worth creating separate fields. It is necessary to have this list so that external providers can use Qilin flexibly without us having to adapt our order model for them.
+        marketplaceName:
+          type: object
+          additionalProperties:
+            type: string
+          description: If the channel to which Qilin docks is also a middleware (e.g. IMN, Tradebyte) then this field indicates on which marketplace the order was created.
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this order
+    successResponse_orderDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    orderLineItemDto:
+      required:
+        - orderLineItemId
+        - channelId
+        - state
+        - taxGroupType
+        - priceGross
+        - priceNet
+        - amount
+        - condition
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this Order Line Item
+        orderLineItemId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this position.
+        channelId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the channel through which this order was generated.
+        state:
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+            - 30
+            - 31
+            - 32
+            - 33
+            - 34
+            - 35
+            - 36
+            - 37
+            - 38
+            - 39
+          type: integer
+          description: The status of the position
+          format: int32
+        taxGroupType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: The control group of the order position
+          format: int32
+        priceGross:
+          $ref: '#/components/schemas/money'
+        priceNet:
+          $ref: '#/components/schemas/money'
+        amount:
+          type: integer
+          description: The amount
+          format: int32
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The condition of the order item
+          format: int32
+        variation:
+          type: object
+          additionalProperties:
+            type: object
+          description: If this item is a variant, the explanation of which variant is the order item is in this dictionary.
+        priority:
+          type: integer
+          description: The priority of this order item. 0 = no priority, 100 = highest priority.
+          format: int32
+          nullable: true
+        erpId:
+          type: string
+          description: An identifier that the ERP system uses to identify actions for this position.
+          nullable: true
+        personalization:
+          type: object
+          additionalProperties:
+            type: string
+          description: Personalization of the order item (e.g. a text to be printed on the product)
+        handlingTime:
+          type: integer
+          description: The time the merchant has to process this item, i.e. the time between the release of the order item by the marketplace and the transfer of the item to the carrier.
+          format: int32
+          nullable: true
+        productOrVariationId:
+          type: string
+          description: reference to the UUID of a product
+          nullable: true
+        gtiNs:
+          type: array
+          items:
+            type: string
+          description: A list of GTINs for this order item
+          nullable: true
+        skUs:
+          type: array
+          items:
+            type: string
+          description: A list of SKUs for this order item
+          nullable: true
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: A list of titles for this order item
+        mpn:
+          type: string
+          description: Manufacturer Product Number
+          nullable: true
+        brandId:
+          type: string
+          description: reference to the UUID of a brand
+          nullable: true
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: A list of reference ids to the categories in which this order item is offered.
+          nullable: true
+    voucherDto:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: A note about the voucher.
+        voucherCode:
+          type: string
+          description: Coupon code.
+        channelId:
+          type: string
+          description: Reference to the ID of the voucher in the channel.
+        erpId:
+          type: string
+          description: Reference to the ID of the credit note in the ERP.
+        discount:
+          $ref: '#/components/schemas/money'
+        source:
+          type: array
+          items:
+            type: string
+          description: Where does this voucher come from (e.g. promotion from the merchant, promotion from the marketplace, individual voucher from the buyer, ...).
+    paymentInfoDto:
+      required:
+        - paymentMethod
+        - paymentInfoId
+        - additionalCost
+        - orderValue
+        - fees
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentDto'
+          description: A list of payments for this order
+          nullable: true
+        paymentMethod:
+          $ref: '#/components/schemas/paymentMethodDto'
+        vouchers:
+          type: array
+          items:
+            $ref: '#/components/schemas/voucherDto'
+          description: A list of coupons for this order
+          nullable: true
+        paymentInfoId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the payment info in the channel.
+        additionalCost:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/money'
+          description: A list of additional costs (costs for the buyer). The Key indicates the name of the additional cost, the Value contains information about the amount of the additional cost and currency.
+        orderValue:
+          $ref: '#/components/schemas/money'
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/fee'
+          description: A list of fees for the trader for this order
+    contactDto:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDto'
+        firstName:
+          type: string
+        lastName:
+          type: string
+        customerNumber:
+          type: string
+        additionalFirstname:
+          type: string
+        additionalLastname:
+          type: string
+        title:
+          type: object
+          additionalProperties:
+            type: string
+        company:
+          type: string
+        salute:
+          type: string
+        sex:
+          enum:
+            - 0
+            - 1
+            - 2
+          type: integer
+          format: int32
+          default: 0
+          nullable: true
+        attention:
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+        emails:
+          type: array
+          items:
+            type: string
+        fax:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneDto'
+        vatNumber:
+          type: string
+        taxNumber:
+          type: string
+      description: Contact information
+    linkDto:
+      required:
+        - url
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes about this link.
+          nullable: true
+        url:
+          minLength: 1
+          type: string
+          description: The URL of the link
+          nullable: true
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name to this link
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this link
+    orderDto:
+      required:
+        - orderLineItems
+        - channelId
+        - orderId
+      type: object
+      properties:
+        orderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderLineItemDto'
+          description: A list of order items for this order
+        paymentInfo:
+          $ref: '#/components/schemas/paymentInfoDto'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDto'
+          description: A list with address to this order
+          nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this Order.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDto'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/linkDto'
+          description: A list of links to this order
+          nullable: true
+        channelId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of the channel through which this order was generated.
+          format: uuid
+        orderId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this order.
+        erpId:
+          type: string
+          description: An identifier that the ERP system uses to identify actions for this order.
+          nullable: true
+        orderNumberMarketplace:
+          type: string
+          description: The order number under which the end customer finds this order in the backend of the marketplace.
+          nullable: true
+        orderNumberErp:
+          type: string
+          description: The order number under which the dealer finds this order in his ERP.
+          nullable: true
+        additionalInformation:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+          description: A list full of objects that we can use to transfer additional information that was not thought of before or for which it is not worth creating separate fields. It is necessary to have this list so that external providers can use Qilin flexibly without us having to adapt our order model for them.
+        marketplaceName:
+          type: object
+          additionalProperties:
+            type: string
+          description: If the channel to which Qilin docks is also a middleware (e.g. IMN, Tradebyte) then this field indicates on which marketplace the order was created.
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this order
+    successResponse_orderDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/orderDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_object:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: object
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    patchUpdateDto:
+      required:
+        - op
+        - path
+        - value
+      type: object
+      properties:
+        op:
+          minLength: 1
+          type: string
+          description: The patch operations supported by JSON Patch are add, remove, replace, move, copy and test
+        path:
+          minLength: 1
+          type: string
+          description: Path to the Op object
+        value:
+          minLength: 1
+          type: string
+          description: Value of Op object
+    messageSender:
+      required:
+        - id
+        - name
+        - email
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: The Id of Sender
+        name:
+          minLength: 1
+          type: string
+          description: The name of Sender
+        email:
+          minLength: 1
+          type: string
+          description: The email of Sender
+      description: Sender information.
+    messageDto:
+      required:
+        - text
+        - messageFrom
+        - sender
+      type: object
+      properties:
+        text:
+          minLength: 1
+          type: string
+          description: The text of the message.
+        createdDate:
+          type: string
+          description: When was this message created.
+          format: date-time
+        messageFrom:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: Where does message come from.
+          format: int32
+        fileAttached:
+          type: string
+          description: Attached file send from sender.
+        sender:
+          $ref: '#/components/schemas/messageSender'
+    ticketLifecycleDetailDto:
+      required:
+        - changedBy
+      type: object
+      properties:
+        changedDate:
+          type: string
+          description: The time when this change of state occurred.
+          format: date-time
+        newStateName:
+          type: string
+          description: The status name after the change (= the new status).
+        oldState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+          type: integer
+          description: "The status value before the change.<br/> \n\t\t\t\tThe data type of the status<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0: New<br/>\n\t\t\t    1: WaitForSenderResponse<br/>\n\t\t\t    2: WaitForReceiverResponse<br/>\n\t\t\t    3: SenderClosingRequest<br/>\n\t\t\t    4: ReceiverClosingRequest<br/>\n\t\t\t    5: ChannelClosingRequest<br/>\n\t\t\t    6: QilinClosingRequest<br/>\n\t\t\t    7: OtherClosingRequest<br/>\n\t\t\t    8: ClosingAcknowledged<br/>\n\t\t\t    9: ClosingRejected<br/>\n\t\t\t    10: InitialSenderClosed<br/>\n\t\t\t    11: InitialReceiverClosed<br/>\n\t\t\t    :12 AllDirectPartiesClosed<br/>\n\t\t\t    13: ChannelClosed<br/>\n\t\t\t    14: QilinClosed<br/>\n\t\t\t    15: OtherClosed"
+          format: int32
+        oldStateName:
+          type: string
+          description: The status name before the change.
+        newState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+          type: integer
+          description: |-
+            The status value after the change (= the new status).<br/> 
+                                            The data type of the status<br/>
+                                            Value:<br/>
+                                            0: New<br/>
+                                            1: WaitForSenderResponse<br/>
+                                            2: WaitForReceiverResponse<br/>
+                                            3: SenderClosingRequest<br/>
+                                            4: ReceiverClosingRequest<br/>
+                                            5: ChannelClosingRequest<br/>
+                                            6: QilinClosingRequest<br/>
+                                            7: OtherClosingRequest<br/>
+                                            8: ClosingAcknowledged<br/>
+                                            9: ClosingRejected<br/>
+                                            10: InitialSenderClosed<br/>
+                                            11: InitialReceiverClosed<br/>
+                                            :12 AllDirectPartiesClosed<br/>
+                                            13: ChannelClosed<br/>
+                                            14: QilinClosed<br/>
+                                            15: OtherClosed
+          format: int32
+        changedBy:
+          $ref: '#/components/schemas/messageSender'
+    messageDetailDto:
+      required:
+        - text
+        - messageFrom
+        - sender
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new message.
+        messageFromName:
+          type: string
+          description: "Channel where message come from<br/>\n                                        Value:<br/>\n                                        0: Product<br/>\n\t\t\t\t\t\t\t\t\t    1: Customer<br/>\n\t\t\t\t\t\t\t\t\t    2: Marketplace<br/>\n\t\t\t\t\t\t\t\t\t    3: Qilin<br/>\n\t\t\t\t\t\t\t\t\t    4: Merchant<br/>\n\t\t\t\t\t\t\t\t\t    5: Fulfiller<br/>\n\t\t\t\t\t\t\t\t\t    6: Carrier<br/>\n\t\t\t\t\t\t\t\t\t    7: PaymentServiceProvider<br/>\n\t\t\t\t\t\t\t\t\t    8: Other<br/>"
+        text:
+          minLength: 1
+          type: string
+          description: The text of the message.
+        createdDate:
+          type: string
+          description: When was this message created.
+          format: date-time
+        messageFrom:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: Where does message come from.
+          format: int32
+        fileAttached:
+          type: string
+          description: Attached file send from sender.
+        sender:
+          $ref: '#/components/schemas/messageSender'
+    orderSupportTicketDetailDto:
+      required:
+        - supportTicketId
+        - topic
+        - orderId
+        - orderLineItems
+        - ticketSource
+        - ticketDestination
+        - receiver
+        - subject
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new order support ticket.
+        ticketCurrentState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+          type: integer
+          description: "Current state value of ticket<br/>\n                                        Value:<br/>\n                                        0: New<br/>\n\t\t\t\t\t\t\t\t\t    1: WaitForSenderResponse<br/>\n\t\t\t\t\t\t\t\t\t    2: WaitForReceiverResponse<br/>\n\t\t\t\t\t\t\t\t\t    3: SenderClosingRequest<br/>\n\t\t\t\t\t\t\t\t\t    4: ReceiverClosingRequest<br/>\n\t\t\t\t\t\t\t\t\t    5: ChannelClosingRequest<br/>\n\t\t\t\t\t\t\t\t\t    6: QilinClosingRequest<br/>\n\t\t\t\t\t\t\t\t\t    7: OtherClosingRequest<br/>\n\t\t\t\t\t\t\t\t\t    8: ClosingAcknowledged<br/>\n\t\t\t\t\t\t\t\t\t    9: ClosingRejected<br/>\n\t\t\t\t\t\t\t\t\t    10: InitialSenderClosed<br/>\n\t\t\t\t\t\t\t\t\t    11: InitialReceiverClosed<br/>\n\t\t\t\t\t\t\t\t\t    :12 AllDirectPartiesClosed<br/>\n\t\t\t\t\t\t\t\t\t    13: ChannelClosed<br/>\n\t\t\t\t\t\t\t\t\t    14: QilinClosed<br/>\n\t\t\t\t\t\t\t\t\t    15: OtherClosed"
+          format: int32
+        ticketCurrentStateName:
+          type: string
+          description: Current state name of ticket
+        ticketStateHistories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ticketLifecycleDetailDto'
+          description: Information about the lifecycle of the ticket (date, old status, new status, etc.)
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/messageDetailDto'
+          description: A list of messages in the ticket. Ticket has messages and those are back-and-forth communication between buyer and seller.
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        supportTicketId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of support ticket in the channel
+        topic:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+            - 30
+            - 31
+            - 32
+            - 33
+            - 34
+            - 35
+            - 36
+          type: integer
+          description: |-
+            The theme of the ticket<br/>
+                                                                Value:<br/>
+                                                                0: Unknown<br/>
+                                                                1: AccountAgeVerification<br/>
+                                                                2: AccountOther<br/>
+                                                                3: AccountPayOut<br/>
+                                                                4: AccountLogin<br/>
+                                                                5: AccountDeletion<br/>
+                                                                6: AccountGdpr<br/>
+                                                                7: AccountNewsletter<br/>
+                                                                8: OrderOther<br/>
+                                                                9: Fraud<br/>
+                                                                10: DeliveryAddressChange<br/>
+                                                                11: DeliveryOther<br/>
+                                                                12: DeliveryWrongProducts<br/>
+                                                                13: DeliveryMissingProducts<br/>
+                                                                14: DeliveryNotReceived<br/>
+                                                                15: DeliveryLate<br/>
+                                                                16: ProductOther<br/>
+                                                                17: ProductWrongExpectation<br/>
+                                                                18: ProductDefect<br/>
+                                                                19: ProductProperties<br/>
+                                                                20: ProductService<br/>
+                                                                21: ProductReplacement<br/>
+                                                                22: ProductAvailability<br/>
+                                                                23: ReturnOther<br/>
+                                                                24: ReturnRequest<br/>
+                                                                25: ReturnShippingLabel<br/>
+                                                                26: ReturnState<br/>
+                                                                27: CancellationOther<br/>
+                                                                28: CancellationRequest<br/>
+                                                                29: PaymentOther<br/>
+                                                                30: PaymentVoucher<br/>
+                                                                31: PaymentRefund<br/>
+                                                                32: PaymentAdmonition<br/>
+                                                                33: PaymentProblemsWithPsp<br/>
+                                                                34: PaymentInvoice<br/>
+                                                                35: PaymentTax<br/>
+                                                                36: Other
+          format: int32
+        reason:
+          type: string
+          description: More detail in Ticket Topic
+        orderId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this order.
+        orderLineItems:
+          type: array
+          items:
+            type: string
+          description: A list of order item ids that the ticket is about.
+        ticketSource:
+          minLength: 1
+          type: string
+          description: Where is the ticket come from? It should be name of Marketplace
+        ticketDestination:
+          minLength: 1
+          type: string
+          description: The system has responsible for solving ticket. It should me the name of ERP or shop system
+        receiver:
+          minLength: 1
+          type: string
+          description: Contact point(name, email, department) responsible for receiving and processing tickets at ERP/ShopSystem
+        subject:
+          minLength: 1
+          type: string
+          description: Subject of ticket
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this ticket
+    successResponse_orderSupportTicketDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/orderSupportTicketDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_orderSupportTicketDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderSupportTicketDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    orderSupportTicketDto:
+      required:
+        - supportTicketId
+        - topic
+        - orderId
+        - orderLineItems
+        - ticketSource
+        - ticketDestination
+        - receiver
+        - subject
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/messageDto'
+          description: A list of messages in the ticket. Ticket has messages and those are back-and-forth communication between buyer and seller.
+        supportTicketId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of support ticket in the channel
+        topic:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+            - 30
+            - 31
+            - 32
+            - 33
+            - 34
+            - 35
+            - 36
+          type: integer
+          description: |-
+            The theme of the ticket<br/>
+                                                                Value:<br/>
+                                                                0: Unknown<br/>
+                                                                1: AccountAgeVerification<br/>
+                                                                2: AccountOther<br/>
+                                                                3: AccountPayOut<br/>
+                                                                4: AccountLogin<br/>
+                                                                5: AccountDeletion<br/>
+                                                                6: AccountGdpr<br/>
+                                                                7: AccountNewsletter<br/>
+                                                                8: OrderOther<br/>
+                                                                9: Fraud<br/>
+                                                                10: DeliveryAddressChange<br/>
+                                                                11: DeliveryOther<br/>
+                                                                12: DeliveryWrongProducts<br/>
+                                                                13: DeliveryMissingProducts<br/>
+                                                                14: DeliveryNotReceived<br/>
+                                                                15: DeliveryLate<br/>
+                                                                16: ProductOther<br/>
+                                                                17: ProductWrongExpectation<br/>
+                                                                18: ProductDefect<br/>
+                                                                19: ProductProperties<br/>
+                                                                20: ProductService<br/>
+                                                                21: ProductReplacement<br/>
+                                                                22: ProductAvailability<br/>
+                                                                23: ReturnOther<br/>
+                                                                24: ReturnRequest<br/>
+                                                                25: ReturnShippingLabel<br/>
+                                                                26: ReturnState<br/>
+                                                                27: CancellationOther<br/>
+                                                                28: CancellationRequest<br/>
+                                                                29: PaymentOther<br/>
+                                                                30: PaymentVoucher<br/>
+                                                                31: PaymentRefund<br/>
+                                                                32: PaymentAdmonition<br/>
+                                                                33: PaymentProblemsWithPsp<br/>
+                                                                34: PaymentInvoice<br/>
+                                                                35: PaymentTax<br/>
+                                                                36: Other
+          format: int32
+        reason:
+          type: string
+          description: More detail in Ticket Topic
+        orderId:
+          minLength: 1
+          type: string
+          description: An identifier that the marketplace uses to identify API actions for this order.
+        orderLineItems:
+          type: array
+          items:
+            type: string
+          description: A list of order item ids that the ticket is about.
+        ticketSource:
+          minLength: 1
+          type: string
+          description: Where is the ticket come from? It should be name of Marketplace
+        ticketDestination:
+          minLength: 1
+          type: string
+          description: The system has responsible for solving ticket. It should me the name of ERP or shop system
+        receiver:
+          minLength: 1
+          type: string
+          description: Contact point(name, email, department) responsible for receiving and processing tickets at ERP/ShopSystem
+        subject:
+          minLength: 1
+          type: string
+          description: Subject of ticket
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this ticket
+    successResponse_paymentInfoDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/paymentInfoDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_purchaseOrderLineItemDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_purchaseOrderLineItemDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    refundDetailDto:
+      required:
+        - claimDate
+        - refundId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Refund.
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+          description: The order items to which this credit note relates
+        refundCreator:
+          $ref: '#/components/schemas/addressDetailDto'
+        refundReceiver:
+          $ref: '#/components/schemas/addressDetailDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes to this credit.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDetailDto'
+        stateName:
+          type: string
+          description: State name of the refund
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        claimDate:
+          minLength: 1
+          type: string
+          description: The credit date
+          format: date-time
+        refundId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of refund in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "State value of the refund<br/>\n                                                    Value:<br/>\n                                                    0: InProgress<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t1: Claimed<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t2: Issued<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t3: Cancelled"
+          format: int32
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: List of media url
+          nullable: true
+        isPayedOut:
+          type: boolean
+          description: Should the credit be paid out to the customer? (If 'no', then the credit becomes credit on the customer's account).
+          nullable: true
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        referencingInvoice:
+          type: string
+          description: The invoice to which this credit note relates
+          nullable: true
+        reason:
+          type: string
+          description: The reason for the credit.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this credit
+    successResponse_refundDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/refundDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    refundDto:
+      required:
+        - claimDate
+        - refundId
+      type: object
+      properties:
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDto'
+          description: The order item ids to which this credit note relates
+          nullable: true
+        refundCreator:
+          $ref: '#/components/schemas/addressDto'
+        refundReceiver:
+          $ref: '#/components/schemas/addressDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes to this credit.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDto'
+        claimDate:
+          minLength: 1
+          type: string
+          description: The credit date
+          format: date-time
+        refundId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of refund in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "State value of the refund<br/>\n                                                    Value:<br/>\n                                                    0: InProgress<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t1: Claimed<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t2: Issued<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t3: Cancelled"
+          format: int32
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: List of media url
+          nullable: true
+        isPayedOut:
+          type: boolean
+          description: Should the credit be paid out to the customer? (If 'no', then the credit becomes credit on the customer's account).
+          nullable: true
+        totalGross:
+          $ref: '#/components/schemas/money'
+        totalNet:
+          $ref: '#/components/schemas/money'
+        referencingInvoice:
+          type: string
+          description: The invoice to which this credit note relates
+          nullable: true
+        reason:
+          type: string
+          description: The reason for the credit.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this credit
+    successResponse_refundDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/refundDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    updateRefundDto:
+      required:
+        - claimDate
+      type: object
+      properties:
+        claimDate:
+          minLength: 1
+          type: string
+          description: The credit date
+          format: date-time
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "State of the refund<br/>\n                                                    Value:<br/>\n                                                    0: InProgress<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t1: Claimed<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t2: Issued<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t3: Cancelled"
+          format: int32
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: List of media id
+          nullable: true
+        isPayedOut:
+          type: boolean
+          description: Should the credit be paid out to the customer? (If 'no', then the credit becomes credit on the customer's account).
+          nullable: true
+        refundReceiver:
+          $ref: '#/components/schemas/addressDto'
+        reason:
+          type: string
+          description: The reason for the credit.
+          nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes to this credit.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this credit
+        contact:
+          $ref: '#/components/schemas/contactDto'
+    updateRefundStateDto:
+      type: object
+      properties:
+        newState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "State value of the refund<br/>\n                                                    Value:<br/>\n                                                    0: InProgress<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t1: Claimed<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t2: Issued<br/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t3: Cancelled"
+          format: int32
+    addonDetailDto:
+      type: object
+      properties:
+        taxGroupName:
+          type: string
+          description: The name of TaxGroup enum
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the desired addon
+        amount:
+          type: number
+          description: The quantity of the desired addon
+          format: float
+          nullable: true
+        taxGroup:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: The control group of the desired addon
+          format: int32
+          nullable: true
+        priceGrossTotal:
+          $ref: '#/components/schemas/money'
+        priceNetTotal:
+          $ref: '#/components/schemas/money'
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this addon.
+    iEnumerable_string:
+      type: array
+      items:
+        type: string
+    shippingInfoDetailDto:
+      type: object
+      properties:
+        addons:
+          type: array
+          items:
+            $ref: '#/components/schemas/addonDetailDto'
+          description: Booked addons for fulfillment of this order or position (e.g. express shipment).
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this shipping item (e.g. "Place in stairwell").
+        fulfillmentByName:
+          type: string
+          description: The indication who fulfilled.
+        taxGroupName:
+          type: string
+          description: The control group of the shipping position.
+        allowedDeliveryWeekdaysName:
+          type: array
+          items:
+            type: string
+          description: Delivery is allowed only on the days of the week indicated here.
+        expectedDeliveryTimeMin:
+          type: string
+          description: The expected earliest delivery date. This date was shown to the end customer as the earliest delivery date when the purchase was made, the end customer expects delivery (not shipping, but delivery) on this date at the earliest. Delivery BEFORE this date may be penalized by the marketplace.
+          format: date-time
+        expectedDeliveryTimeMax:
+          type: string
+          description: The expected latest delivery date. This date was shown to the end customer as the latest delivery date when the purchase was made, the end customer expects delivery (not shipping, but delivery) on this date at the latest. Deliveries AFTER this date may be penalized by the marketplace.
+          format: date-time
+        fulfillmentBy:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "The indication who fulfilled.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Merchant<br/>\n\t\t\t1: ExternalFulfiller<br/>\n\t\t\t2: Marketplace<br/>\n\t\t\t3: Customer"
+          format: int32
+        carrierId:
+          type: string
+          description: The ID of the shipping service provider (DHL, DPD, GLS, Download, Pickup, ...) ((the ID comes defined by Qilin).
+        shippingType:
+          type: string
+          description: The shipping method (letter, package, ... ).
+        taxGroup:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: "The control group of the shipping position.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Normal<br/>\n\t\t\t1: Reduced<br/>\n\t\t\t2: TaxFree<br/>\n\t\t\t3: Regular<br/>\n\t\t\t4: Unknown"
+          format: int32
+        priceGross:
+          $ref: '#/components/schemas/money'
+        priceNet:
+          $ref: '#/components/schemas/money'
+        shippingLabels:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+          description: The list labels of this shipping (link to media url).
+        tracingKey:
+          type: string
+          description: The tracking key.
+        trackingUrl:
+          type: string
+          description: The tracking URL.
+        allowedDeliveryWeekdays:
+          type: array
+          items:
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+            type: integer
+            format: int32
+            default: 0
+          description: "Delivery is allowed only on the days of the week indicated here.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Sunday<br/>\n\t\t\t1: Monday<br/>\n\t\t\t2: Tuesday<br/>\n\t\t\t3: Wednesday<br/>\n\t\t\t4: Thursday<br/>\n\t\t\t5: Friday<br/>\n\t\t\t6: Saturday"
+        allowedDeliveryHours:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: Delivery is allowed only at the times specified here. If "09,10,11,15,16,19" is indicated, it means delivery is allowed from 09:00-11:59 and at 15:00-16:59 and at 19:00-19:59.
+      description: Return shipping information
+    returnDetailDto:
+      required:
+        - returnId
+        - state
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Return.
+        deliveryAddress:
+          $ref: '#/components/schemas/addressDetailDto'
+        shippingInfo:
+          $ref: '#/components/schemas/shippingInfoDetailDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this return.
+          nullable: true
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+          description: A list of order items that have been returned.
+          nullable: true
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        stateName:
+          type: string
+          description: The state name of the return
+        returnId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of return in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: |-
+            The status value of the return<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: LabelGenerated<br/>
+                                                                4: PackageSent<br/>
+                                                                5: PackageReceived<br/>
+                                                                6: LabelDeleted<br/>
+                                                                7: ClarificationRequest<br/>
+                                                                8: ClarificationAcknowledged<br/>
+                                                                9: ClarificationRejected<br/>
+                                                                10: RepairRequest<br/>
+                                                                11: RepairAcknowledged<br/>
+                                                                12: RepairRejected<br/>
+                                                                13: Finished
+          format: int32
+        requestReason:
+          type: string
+          description: The reason for the return request
+          nullable: true
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the return request '
+          nullable: true
+        packageId:
+          type: string
+          description: The ID of the package with which the item was originally shipped.
+          nullable: true
+        daysSinceShipping:
+          type: integer
+          description: The number of days between the shipment of the item and the arrival of the return.
+          format: int32
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this return
+    successResponse_returnDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    addonDto:
+      type: object
+      properties:
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the desired addon
+        amount:
+          type: number
+          description: The quantity of the desired addon
+          format: float
+          nullable: true
+        taxGroup:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: The control group of the desired addon
+          format: int32
+          nullable: true
+        priceGrossTotal:
+          $ref: '#/components/schemas/money'
+        priceNetTotal:
+          $ref: '#/components/schemas/money'
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options for this addon.
+    shippingInfoDto:
+      type: object
+      properties:
+        addons:
+          type: array
+          items:
+            $ref: '#/components/schemas/addonDto'
+          description: Booked addons for fulfillment of this order or position (e.g. express shipment).
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this shipping item (e.g. "Place in stairwell").
+        expectedDeliveryTimeMin:
+          type: string
+          description: The expected earliest delivery date. This date was shown to the end customer as the earliest delivery date when the purchase was made, the end customer expects delivery (not shipping, but delivery) on this date at the earliest. Delivery BEFORE this date may be penalized by the marketplace.
+          format: date-time
+        expectedDeliveryTimeMax:
+          type: string
+          description: The expected latest delivery date. This date was shown to the end customer as the latest delivery date when the purchase was made, the end customer expects delivery (not shipping, but delivery) on this date at the latest. Deliveries AFTER this date may be penalized by the marketplace.
+          format: date-time
+        fulfillmentBy:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: "The indication who fulfilled.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Merchant<br/>\n\t\t\t1: ExternalFulfiller<br/>\n\t\t\t2: Marketplace<br/>\n\t\t\t3: Customer"
+          format: int32
+        carrierId:
+          type: string
+          description: The ID of the shipping service provider (DHL, DPD, GLS, Download, Pickup, ...) ((the ID comes defined by Qilin).
+        shippingType:
+          type: string
+          description: The shipping method (letter, package, ... ).
+        taxGroup:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          description: "The control group of the shipping position.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Normal<br/>\n\t\t\t1: Reduced<br/>\n\t\t\t2: TaxFree<br/>\n\t\t\t3: Regular<br/>\n\t\t\t4: Unknown"
+          format: int32
+        priceGross:
+          $ref: '#/components/schemas/money'
+        priceNet:
+          $ref: '#/components/schemas/money'
+        shippingLabels:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+          description: The list labels of this shipping (link to media url).
+        tracingKey:
+          type: string
+          description: The tracking key.
+        trackingUrl:
+          type: string
+          description: The tracking URL.
+        allowedDeliveryWeekdays:
+          type: array
+          items:
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+            type: integer
+            format: int32
+            default: 0
+          description: "Delivery is allowed only on the days of the week indicated here.<br/>\n\t\t\tThe data type of the source<br/>\n\t\t\tValue:<br/>\n\t\t\t0: Sunday<br/>\n\t\t\t1: Monday<br/>\n\t\t\t2: Tuesday<br/>\n\t\t\t3: Wednesday<br/>\n\t\t\t4: Thursday<br/>\n\t\t\t5: Friday<br/>\n\t\t\t6: Saturday"
+        allowedDeliveryHours:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: Delivery is allowed only at the times specified here. If "09,10,11,15,16,19" is indicated, it means delivery is allowed from 09:00-11:59 and at 15:00-16:59 and at 19:00-19:59.
+      description: Return shipping information
+    returnDto:
+      required:
+        - purchaseOrderLineItems
+        - returnId
+        - state
+      type: object
+      properties:
+        deliveryAddress:
+          $ref: '#/components/schemas/addressDto'
+        shippingInfo:
+          $ref: '#/components/schemas/shippingInfoDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this return.
+          nullable: true
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDto'
+          description: A list of order items that have been returned.
+          nullable: true
+        returnId:
+          minLength: 1
+          type: string
+          description: Reference to the ID of return in the channel
+        state:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: |-
+            The status value of the return<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: LabelGenerated<br/>
+                                                                4: PackageSent<br/>
+                                                                5: PackageReceived<br/>
+                                                                6: LabelDeleted<br/>
+                                                                7: ClarificationRequest<br/>
+                                                                8: ClarificationAcknowledged<br/>
+                                                                9: ClarificationRejected<br/>
+                                                                10: RepairRequest<br/>
+                                                                11: RepairAcknowledged<br/>
+                                                                12: RepairRejected<br/>
+                                                                13: Finished
+          format: int32
+        requestReason:
+          type: string
+          description: The reason for the return request
+          nullable: true
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the return request '
+          nullable: true
+        packageId:
+          type: string
+          description: The ID of the package with which the item was originally shipped.
+          nullable: true
+        daysSinceShipping:
+          type: integer
+          description: The number of days between the shipment of the item and the arrival of the return.
+          format: int32
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this return
+    successResponse_returnDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/returnDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    updateReturnStatusDto:
+      required:
+        - newState
+      type: object
+      properties:
+        newState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: |-
+            New state of this return.<br/>
+                                                                Value:<br/>
+                                                                0: Requested<br/>
+                                                                1: Acknowledged<br/>
+                                                                2: Rejected<br/>
+                                                                3: LabelGenerated<br/>
+                                                                4: PackageSent<br/>
+                                                                5: PackageReceived<br/>
+                                                                6: LabelDeleted<br/>
+                                                                7: ClarificationRequest<br/>
+                                                                8: ClarificationAcknowledged<br/>
+                                                                9: ClarificationRejected<br/>
+                                                                10: RepairRequest<br/>
+                                                                11: RepairAcknowledged<br/>
+                                                                12: RepairRejected<br/>
+                                                                13: Finished
+          format: int32
+        rejectReason:
+          type: string
+          description: 'The reason for the rejection of the return request '
+          nullable: true
+    packageDto:
+      required:
+        - purchaseOrderLineItems
+        - shippingInfo
+        - shipmentDate
+      type: object
+      properties:
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDto'
+          description: A list of items that will be shipped in this package.
+        shippingInfo:
+          $ref: '#/components/schemas/shippingInfoDto'
+        returnShippingInfo:
+          $ref: '#/components/schemas/shippingInfoDto'
+        fulfillmentAddress:
+          $ref: '#/components/schemas/addressDto'
+        receiverAddress:
+          $ref: '#/components/schemas/addressDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this package.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDto'
+        shipmentDate:
+          minLength: 1
+          type: string
+          description: A list of packages.
+          format: date-time
+        height:
+          type: integer
+          description: The height of the package in cm.
+          format: int32
+          nullable: true
+        width:
+          type: integer
+          description: The width of the package in cm.
+          format: int32
+          nullable: true
+        length:
+          type: integer
+          description: The length of the package in cm.
+          format: int32
+          nullable: true
+        weight:
+          type: integer
+          description: The weight of the package in grams.
+          format: int32
+          nullable: true
+        hazardCodes:
+          type: array
+          items:
+            type: string
+          description: Hazard labeling.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this package.
+    deliveryNoteDto:
+      required:
+        - deliveryNoteCreatedDate
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/packageDto'
+          description: A list of packages.
+          nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this delivery bill..
+        deliveryNoteCreatedDate:
+          minLength: 1
+          type: string
+          description: The time when this delivery bill was created.
+          format: date-time
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this delivery bill..
+    packageDetailDto:
+      required:
+        - shipmentDate
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Package.
+        purchaseOrderLineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseOrderLineItemDetailDto'
+          description: A list of items that will be shipped in this package.
+        shippingInfo:
+          $ref: '#/components/schemas/shippingInfoDetailDto'
+        returnShippingInfo:
+          $ref: '#/components/schemas/shippingInfoDetailDto'
+        fulfillmentAddress:
+          $ref: '#/components/schemas/addressDetailDto'
+        receiverAddress:
+          $ref: '#/components/schemas/addressDetailDto'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this package.
+          nullable: true
+        contact:
+          $ref: '#/components/schemas/contactDetailDto'
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        shipmentDate:
+          minLength: 1
+          type: string
+          description: A list of packages.
+          format: date-time
+        height:
+          type: integer
+          description: The height of the package in cm.
+          format: int32
+          nullable: true
+        width:
+          type: integer
+          description: The width of the package in cm.
+          format: int32
+          nullable: true
+        length:
+          type: integer
+          description: The length of the package in cm.
+          format: int32
+          nullable: true
+        weight:
+          type: integer
+          description: The weight of the package in grams.
+          format: int32
+          nullable: true
+        hazardCodes:
+          type: array
+          items:
+            type: string
+          description: Hazard labeling.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this package.
+    deliveryNoteDetailDto:
+      required:
+        - deliveryNoteCreatedDate
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Delivery Note.
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/packageDetailDto'
+          description: A list of packages.
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this delivery bill..
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        deliveryNoteCreatedDate:
+          minLength: 1
+          type: string
+          description: The time when this delivery bill was created.
+          format: date-time
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this delivery bill..
+    successResponse_deliveryNoteDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/deliveryNoteDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_packageDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/packageDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    shipmentDetailDto:
+      required:
+        - shipmentCreatedDate
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new Shipment.
+        deliveryNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/deliveryNoteDetailDto'
+          description: A ruse with delivery bills.
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes on this package.
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        shipmentCreatedDate:
+          minLength: 1
+          type: string
+          description: The time when the package was shipped (handed over to the carrier)
+          format: date-time
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this package.
+    successResponse_shipmentDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipmentDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    shipmentDto:
+      required:
+        - deliveryNotes
+        - shipmentCreatedDate
+      type: object
+      properties:
+        deliveryNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/deliveryNoteDto'
+          description: A ruse with delivery bills.
+          nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes on this package.
+        shipmentCreatedDate:
+          minLength: 1
+          type: string
+          description: The time when the package was shipped (handed over to the carrier)
+          format: date-time
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this package.
+    successResponse_shipmentDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/shipmentDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    ticketLifeCycleDto:
+      required:
+        - changedBy
+      type: object
+      properties:
+        newState:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+          type: integer
+          description: |-
+            The status value after the change (= the new status).<br/> 
+                                            The data type of the status<br/>
+                                            Value:<br/>
+                                            0: New<br/>
+                                            1: WaitForSenderResponse<br/>
+                                            2: WaitForReceiverResponse<br/>
+                                            3: SenderClosingRequest<br/>
+                                            4: ReceiverClosingRequest<br/>
+                                            5: ChannelClosingRequest<br/>
+                                            6: QilinClosingRequest<br/>
+                                            7: OtherClosingRequest<br/>
+                                            8: ClosingAcknowledged<br/>
+                                            9: ClosingRejected<br/>
+                                            10: InitialSenderClosed<br/>
+                                            11: InitialReceiverClosed<br/>
+                                            :12 AllDirectPartiesClosed<br/>
+                                            13: ChannelClosed<br/>
+                                            14: QilinClosed<br/>
+                                            15: OtherClosed
+          format: int32
+        changedBy:
+          $ref: '#/components/schemas/messageSender'
+    feedbackDetailDto:
+      required:
+        - feedbackId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new feedback.
+        sourceName:
+          type: string
+          description: Who wrote the review.
+        targetName:
+          type: string
+          description: Who or what was evaluated.
+        repliedFeedbackId:
+          type: string
+          description: the reply of this feedback come from Target.
+        updatedDate:
+          type: string
+          description: The latest update time.
+          format: date-time
+        feedbackId:
+          minLength: 1
+          type: string
+          description: The id from source who is create this feedback. It's used for recognize which feedback is replied
+        source:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: "Who wrote the review<br/>\n\t\t\t\tThe data type of the source<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0: Product<br/>\n\t\t\t    1: Customer<br/>\n\t\t\t    2: Marketplace<br/>\n\t\t\t    3: Qilin<br/>\n\t\t\t    4: Merchant<br/>\n\t\t\t    5: Fulfiller<br/>\n\t\t\t    6: Carrier<br/>\n\t\t\t    7: PaymentServiceProvider<br/>\n\t\t\t    8: Other"
+          format: int32
+          nullable: true
+        target:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: "Who or what was evaluated<br/> \n\t\t\t\tThe data type of the Target<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0: Product<br/>\n\t\t\t    1: Customer<br/>\n\t\t\t    2: Marketplace<br/>\n\t\t\t    3: Qilin<br/>\n\t\t\t    4: Merchant<br/>\n\t\t\t    5: Fulfiller<br/>\n\t\t\t    6: Carrier<br/>\n\t\t\t    7: PaymentServiceProvider<br/>\n\t\t\t    8: Other"
+          format: int32
+          nullable: true
+        rate:
+          type: integer
+          description: The rating, where 0 = the worst value and 100 = the best value.
+          format: int32
+          nullable: true
+        sourceReference:
+          type: string
+          description: Reference where the rating comes from (e.g. ID of the customer, the merchant, the marketplace, ...)
+          nullable: true
+        targetReference:
+          type: string
+          description: Reference to which the evaluation refers (e.g. ID of an order item, ID of a customer, ID of a merchant, ID of a shipment, ID of a payment transaction, ...).
+          nullable: true
+        subject:
+          type: object
+          additionalProperties:
+            type: string
+          description: The subject of the evaluation
+        shortText:
+          type: object
+          additionalProperties:
+            type: string
+          description: The summary of the evaluation
+        longText:
+          type: object
+          additionalProperties:
+            type: string
+          description: The detailed assessment
+    successResponse_feedbackDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/feedbackDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    feedbackDto:
+      required:
+        - feedbackId
+      type: object
+      properties:
+        feedbackId:
+          minLength: 1
+          type: string
+          description: The id from source who is create this feedback. It's used for recognize which feedback is replied
+        source:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: "Who wrote the review<br/>\n\t\t\t\tThe data type of the source<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0: Product<br/>\n\t\t\t    1: Customer<br/>\n\t\t\t    2: Marketplace<br/>\n\t\t\t    3: Qilin<br/>\n\t\t\t    4: Merchant<br/>\n\t\t\t    5: Fulfiller<br/>\n\t\t\t    6: Carrier<br/>\n\t\t\t    7: PaymentServiceProvider<br/>\n\t\t\t    8: Other"
+          format: int32
+          nullable: true
+        target:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+          type: integer
+          description: "Who or what was evaluated<br/> \n\t\t\t\tThe data type of the Target<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0: Product<br/>\n\t\t\t    1: Customer<br/>\n\t\t\t    2: Marketplace<br/>\n\t\t\t    3: Qilin<br/>\n\t\t\t    4: Merchant<br/>\n\t\t\t    5: Fulfiller<br/>\n\t\t\t    6: Carrier<br/>\n\t\t\t    7: PaymentServiceProvider<br/>\n\t\t\t    8: Other"
+          format: int32
+          nullable: true
+        rate:
+          type: integer
+          description: The rating, where 0 = the worst value and 100 = the best value.
+          format: int32
+          nullable: true
+        sourceReference:
+          type: string
+          description: Reference where the rating comes from (e.g. ID of the customer, the merchant, the marketplace, ...)
+          nullable: true
+        targetReference:
+          type: string
+          description: Reference to which the evaluation refers (e.g. ID of an order item, ID of a customer, ID of a merchant, ID of a shipment, ID of a payment transaction, ...).
+          nullable: true
+        subject:
+          type: object
+          additionalProperties:
+            type: string
+          description: The subject of the evaluation
+        shortText:
+          type: object
+          additionalProperties:
+            type: string
+          description: The summary of the evaluation
+        longText:
+          type: object
+          additionalProperties:
+            type: string
+          description: The detailed assessment
+    successResponse_feedbackDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/feedbackDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+security:
+  - bearer: []
+  - api_key: []
