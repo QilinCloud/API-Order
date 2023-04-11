@@ -11,7 +11,9 @@ The Offer API is used to manage orders. An order consists of at least one order 
 
 * [Documentation](https://documentation.api.qilin.cloud/order/)
 * [Schema](https://documentation.api.qilin.cloud/openapi/order/tag/schema/)
-* [Getting Developer Access](https://documentation.api.qilin.cloud/)
+* [OpenAPI Specification](https://github.com/QilinCloud/API-Order/blob/main/openapi-order.yaml)
+* [Postman Collection](https://github.com/QilinCloud/API-Order/blob/main/postman_collection-order.json)
+* [SDKs](https://github.com/search?q=user%3AQilinCloud+SDK)
 
 
 ## How to provide feedback
