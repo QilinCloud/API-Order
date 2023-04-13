@@ -38,7 +38,7 @@ body:
       description: "Be as detailled as possible."
       render: bash
     validations:
-      required: true    
+      required: no    
   
   - type: textarea
     id: expected
@@ -47,7 +47,7 @@ body:
       description: "What is the result you expect?"
       render: bash
     validations:
-      required: true
+      required: no
       
   - type: textarea
     id: context
@@ -56,7 +56,7 @@ body:
       description: "Write everything that helps us to understand the circumstances"
       render: bash
     validations:
-      required: true
+      required: no
       
   - type: markdown
     attributes:
