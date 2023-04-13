@@ -5,13 +5,13 @@ body:
     attributes:
       label: Is there an existing issue for this?
       options:
-        - label: I have searched the existing issues, there is no
+        - label: I have searched the existing issues, there is no existing issue.
           required: true
           
   - type: dropdown
     id: type
     attributes:
-      label: Which type is this about?
+      label: Which type is this thread about?
       options:
         - Bug
         - Feature Request
@@ -57,3 +57,9 @@ body:
       render: bash
     validations:
       required: true
+      
+  - type: markdown
+    attributes:
+      value: |
+        ## Pictures
+        Screenshots and Pictures can be addet in the first comment, after creating the new thread.
