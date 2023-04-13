@@ -1,55 +1,63 @@
-title: "[General] "
+title: "[Bug] "
 labels: ["General Introduction"]
 body:
-  - type: markdown
+  - type: checkboxes
     attributes:
-      value: |
-        This is text that will show up in the template!
+      label: Is there an existing issue for this?
+      options:
+        - label: I have searched the existing issues, there is no
+          required: true
+          
+  - type: dropdown
+    id: type
+    attributes:
+      label: Which type is this about?
+      options:
+        - Bug
+        - Feature Request
+        - Outdated Information
+        - Missing Information
+        - Typo
+        - Other
+    validations:
+      required: true
+      
   - type: textarea
-    id: improvements
+    id: description
     attributes:
-      label: Top 3 improvements
-      description: "What are the top 3 improvements we could make to this project?"
+      label: Describe it
+      description: "What is this thread about?"
       value: |
-        1.
-        2.
-        3.
-        ...
       render: bash
     validations:
       required: true
-  - type: markdown
+      
+  - type: textarea
+    id: reproduce
     attributes:
+      label: Steps to reproduce
+      description: "Be as detailled as possible."
       value: |
-        ## Markdown header
-        And some more markdown
-  - type: input
-    id: has-id
+      render: bash
+    validations:
+      required: true    
+  
+  - type: textarea
+    id: expected
     attributes:
-      label: Suggestions
-      description: A description about suggestions to help you
+      label: Expected behaviour
+      description: "What is the result you expect?"
+      value: |
+      render: bash
     validations:
       required: true
-  - type: dropdown
-    id: download
+      
+  - type: textarea
+    id: context
     attributes:
-      label: Which area of this project could be most improved?
-      options:
-        - Documentation
-        - Pull request review time
-        - Bug fix time
-        - Release cadence
+      label: Additional context
+      description: "Write everything that helps us to understand the circumstances"
+      value: |
+      render: bash
     validations:
       required: true
-  - type: checkboxes
-    attributes:
-      label: Check that box!
-      options:
-        - label: This one!
-          required: true
-        - label: I won't stop you if you check this one, too
-  - type: markdown
-    attributes:
-      value: |
-        ### The thrilling conclusion
-        _to our template_
