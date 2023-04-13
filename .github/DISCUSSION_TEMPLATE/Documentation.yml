@@ -61,5 +61,5 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Pictures
+        ## :bulb: Screenshots
         Screenshots and Pictures can be addet in the first comment, after creating the new thread.
