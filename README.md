@@ -4,7 +4,7 @@
 
 The Offer API is used to manage orders. An order consists of at least one order line item, as well as billing address, shipping address and often other details (payment methods and payments, shipping methods and shipments, and so on). An order line item usually refers to an [offer](https://github.com/QilinCloud/API-Offer/) on the channel, but can also be a so-called "free item", i.e. an order line item without reference to a specific offer.
 
-### :bulb: Example:
+### :bulb: Example
 
 *The customer John Doe, residing at Hauptstraße 1, 12345 Berlin, Germany, would like to order 2 pieces of the offered glass bottle Coca-Cola, 1.0L, at 4.00 US Dollar each to the delivery address: Bahnhofsstraße 14, 53123 Bonn, Germany. He has already paid by credit card on 01.01.2023.. This and similar order data (like shipments, returnings, invoices, refunds, and so on) are managed by the Order API.*
 
