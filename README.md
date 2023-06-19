@@ -31,7 +31,7 @@ Note that by submitting your feedback, we have the right to use it.[^1]
 ## Code Quality
 
 We use a variety of state-of-the-art techniques to ensure that our code meets the highest quality criteria.
-If you still notice something wrong, we are happy to have a strong community to solve the problem together with you: [How to provide feedback](https://github.com/QilinCloud/API-Order/#how-to-provide-feedback)
+If you still notice something bad, we are happy to have a strong community to solve the problem together with you: [How to provide feedback](https://github.com/QilinCloud/API-Order/#how-to-provide-feedback)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=marcossoftware_Qilin.Core.Order&token=34332e2141d01e981faaccaa27d2d80e7c5d8afb)](https://sonarcloud.io/summary/new_code?id=marcossoftware_Qilin.Core.Order)
 
