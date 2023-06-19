@@ -22,7 +22,7 @@ The Offer API is used to manage orders. An order consists of at least one order 
 
 Generally, bugs and feature requests for the API or docs should be [Github issues](https://github.com/QilinCloud/API-Order/issues/new). Everything else should be discussed here: [API-Order Discussion](https://github.com/QilinCloud/API-Order/discussions).
 
-:warning:  **For vulnerabilities please check out the [Security](https://github.com/QilinCloud/API-Order/security) area.**
+:warning:  **For vulnerabilities please check out the [security](https://github.com/QilinCloud/API-Order/security) area.**
 
 ## Legal
 
